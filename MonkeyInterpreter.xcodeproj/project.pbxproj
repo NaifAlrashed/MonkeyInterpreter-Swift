@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		9EFFE02922295C34006DAFC0 /* MonkeyInterpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EFFE01F22295C34006DAFC0 /* MonkeyInterpreter.framework */; };
 		9EFFE02E22295C34006DAFC0 /* MonkeyInterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFFE02D22295C34006DAFC0 /* MonkeyInterpreterTests.swift */; };
-		9EFFE03022295C34006DAFC0 /* MonkeyInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EFFE02222295C34006DAFC0 /* MonkeyInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9EFFE03A2229608F006DAFC0 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFFE0392229608F006DAFC0 /* Token.swift */; };
+		9EFFE03C222978B0006DAFC0 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFFE03B222978B0006DAFC0 /* Lexer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +25,12 @@
 
 /* Begin PBXFileReference section */
 		9EFFE01F22295C34006DAFC0 /* MonkeyInterpreter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MonkeyInterpreter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EFFE02222295C34006DAFC0 /* MonkeyInterpreter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonkeyInterpreter.h; sourceTree = "<group>"; };
 		9EFFE02322295C34006DAFC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EFFE02822295C34006DAFC0 /* MonkeyInterpreterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyInterpreterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EFFE02D22295C34006DAFC0 /* MonkeyInterpreterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyInterpreterTests.swift; sourceTree = "<group>"; };
 		9EFFE02F22295C34006DAFC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EFFE0392229608F006DAFC0 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		9EFFE03B222978B0006DAFC0 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +73,9 @@
 		9EFFE02122295C34006DAFC0 /* MonkeyInterpreter */ = {
 			isa = PBXGroup;
 			children = (
-				9EFFE02222295C34006DAFC0 /* MonkeyInterpreter.h */,
 				9EFFE02322295C34006DAFC0 /* Info.plist */,
+				9EFFE0392229608F006DAFC0 /* Token.swift */,
+				9EFFE03B222978B0006DAFC0 /* Lexer.swift */,
 			);
 			path = MonkeyInterpreter;
 			sourceTree = "<group>";
@@ -93,7 +96,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EFFE03022295C34006DAFC0 /* MonkeyInterpreter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +150,7 @@
 				TargetAttributes = {
 					9EFFE01E22295C34006DAFC0 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					9EFFE02722295C34006DAFC0 = {
 						CreatedOnToolsVersion = 10.1;
@@ -194,6 +197,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EFFE03C222978B0006DAFC0 /* Lexer.swift in Sources */,
+				9EFFE03A2229608F006DAFC0 /* Token.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +346,7 @@
 		9EFFE03422295C34006DAFC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -358,6 +364,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.naifdev.www.MonkeyInterpreter;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -366,6 +373,7 @@
 		9EFFE03522295C34006DAFC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -391,6 +399,7 @@
 		9EFFE03722295C34006DAFC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8Q8YMY5389;
 				INFOPLIST_FILE = MonkeyInterpreterTests/Info.plist;
@@ -409,6 +418,7 @@
 		9EFFE03822295C34006DAFC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8Q8YMY5389;
 				INFOPLIST_FILE = MonkeyInterpreterTests/Info.plist;

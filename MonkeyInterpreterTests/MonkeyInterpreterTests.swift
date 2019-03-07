@@ -10,25 +10,91 @@ import XCTest
 @testable import MonkeyInterpreter
 
 class MonkeyInterpreterTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func test_lexerInput() {
+        let input = "=+(){},;"
+        var lexer = Lexer(input: input)
+        
+        let expectedTokens: [Token] = [
+            .assign,
+            .plus,
+            .leftParanthases,
+            .rightParanthases,
+            .leftBrace,
+            .rightBrace,
+            .comma,
+            .semicolon,
+            .EOF
+        ]
+        XCTAssertEqual(lexer.tokenize(), expectedTokens)
         }
+    
+    func test_oneLine_ofMonkeyCode() {
+        let input = "let five = 5;"
+        var lexer = Lexer(input: input)
+        let expectedTokens: [Token] = [
+            .let,
+            .variable(name: "five"),
+            .assign,
+            .int(value: 5),
+            .semicolon,
+            .EOF
+        ]
+        
+        XCTAssertEqual(lexer.tokenize(), expectedTokens)
     }
+    
+    func test_firstMonkeyCode() {
+        let input = """
+                    let five = 5;
+                    let ten = 10;
+                    let add = fn(x, y) {
+                         x + y;
+                    };
+                    let result = add(five, ten);
+                    """
+        var lexer = Lexer(input: input)
 
+        let expectedTokens: [Token] = [
+            .let,
+            .variable(name: "five"),
+            .assign,
+            .int(value: 5),
+            .semicolon,
+            .let,
+            .variable(name: "ten"),
+            .assign,
+            .int(value: 10),
+            .semicolon,
+            .let,
+            .variable(name: "add"),
+            .assign,
+            .function,
+            .leftParanthases,
+            .variable(name: "x"),
+            .comma,
+            .variable(name: "y"),
+            .rightParanthases,
+            .leftBrace,
+            .variable(name: "x"),
+            .plus,
+            .variable(name: "y"),
+            .semicolon,
+            .rightBrace,
+            .semicolon,
+            .let,
+            .variable(name: "result"),
+            .assign,
+            .variable(name: "add"),
+            .leftParanthases,
+            .variable(name: "five"),
+            .comma,
+            .variable(name: "ten"),
+            .rightParanthases,
+            .semicolon,
+            .EOF
+        ]
+
+        XCTAssertEqual(lexer.tokenize(), expectedTokens)
+    }
 }
