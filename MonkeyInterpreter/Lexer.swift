@@ -73,10 +73,33 @@ struct Lexer {
         switch char {
         case "=":
             currentIndex = input.index(after: currentIndex)
-            return .assign
+            if input[currentIndex] == "=" {
+                currentIndex = input.index(after: currentIndex)
+                return .equal
+            } else {
+                return .assign
+            }
         case "+":
             currentIndex = input.index(after: currentIndex)
             return .plus
+        case "*":
+            currentIndex = input.index(after: currentIndex)
+            return .times
+        case "/":
+            currentIndex = input.index(after: currentIndex)
+            return .divide
+        case "-":
+            currentIndex = input.index(after: currentIndex)
+            return .minus
+        case "!":
+            currentIndex = input.index(after: currentIndex)
+            return .bang
+        case ">":
+            currentIndex = input.index(after: currentIndex)
+            return .biggerThan
+        case "<":
+            currentIndex = input.index(after: currentIndex)
+            return .smallerThan
         case "(":
             currentIndex = input.index(after: currentIndex)
             return .leftParanthases
@@ -125,6 +148,16 @@ struct Lexer {
             return .let
         case "fn":
             return .function
+        case "if":
+            return .if
+        case "else":
+            return .else
+        case "return":
+            return .return
+        case "true":
+            return .true
+        case "false":
+            return .false
         default:
             return .variable(name: word)
         }

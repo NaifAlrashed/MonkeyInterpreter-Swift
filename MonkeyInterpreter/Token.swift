@@ -14,6 +14,13 @@ enum Token: Equatable {
     // Operators
     case assign
     case plus
+    case minus
+    case bang
+    case times
+    case divide
+    case equal
+    case biggerThan
+    case smallerThan
     
     // Delimiters
     case comma
@@ -27,6 +34,11 @@ enum Token: Equatable {
     // Keywords
     case function
     case `let`
+    case `if`
+    case `else`
+    case `return`
+    case `true`
+    case `false`
     
     case variable(name: String)
     case int(value: Int)

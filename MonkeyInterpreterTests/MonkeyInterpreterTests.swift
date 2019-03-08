@@ -97,4 +97,65 @@ class MonkeyInterpreterTests: XCTestCase {
 
         XCTAssertEqual(lexer.tokenize(), expectedTokens)
     }
+    
+    func test_newTokens() {
+        let input = """
+                    !-/*5;
+                    5 < 10 > 5;
+
+                    if (5 < 10) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                    10 == 10;
+                    10 != 9;
+                    """
+        var lexer = Lexer(input: input)
+        
+        let expectedTokens: [Token] = [
+            .bang,
+            .minus,
+            .divide,
+            .times,
+            .int(value: 5),
+            .semicolon,
+            .int(value: 5),
+            .smallerThan,
+            .int(value: 10),
+            .biggerThan,
+            .int(value: 5),
+            .semicolon,
+            .if,
+            .leftParanthases,
+            .int(value: 5),
+            .smallerThan,
+            .int(value: 10),
+            .rightParanthases,
+            .leftBrace,
+            .return,
+            .true,
+            .semicolon,
+            .rightBrace,
+            .else,
+            .leftBrace,
+            .return,
+            .false,
+            .semicolon,
+            .rightBrace,
+            .int(value: 10),
+            .equal,
+            .int(value: 10),
+            .semicolon,
+            .int(value: 10),
+            .bang,
+            .assign,
+            .int(value: 9),
+            .semicolon,
+            .EOF
+        ]
+        
+        XCTAssertEqual(lexer.tokenize(), expectedTokens)
+    }
 }
