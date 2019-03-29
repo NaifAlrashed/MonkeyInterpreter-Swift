@@ -6,7 +6,6 @@
 //  Copyright © 2019 Naif Alrashed. All rights reserved.
 //
 
-protocol Statement: Node {
-//    var node: Node { get }
-    func statementNode()
+enum Statement: Equatable {
+    case `let`(name: String, value: Expression)
 }

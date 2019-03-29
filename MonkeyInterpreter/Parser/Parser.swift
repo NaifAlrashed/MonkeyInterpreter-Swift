@@ -28,4 +28,42 @@ struct Parser {
     init(lexer: Lexer) {
         self.lexer = lexer
     }
+    
+    mutating func parse() -> [Statement] {
+        var resultedTokens = ArraySlice(tokens)
+        var statements = [Statement]()
+        while let statement = resultedTokens.readStatement() {
+            statements.append(statement)
+        }
+        return statements
+    }
+}
+
+extension ArraySlice where Element == Token {
+    
+    mutating func readStatement() -> Statement? {
+        return readLetStatement()
+    }
+    
+    mutating func readLetStatement() -> Statement? {
+        let start = self
+        guard self.popFirst() == .let,
+            let potentialVariable = self.popFirst(),
+            case .variable(let name) = potentialVariable,
+            let expression = self.readExpression()
+        else {
+            self = start
+            return nil
+        }
+        return .let(name: name, value: expression)
+    }
+    
+    mutating func readExpression() -> Expression? {
+        let start = self
+        guard let potentialNumber = self.popFirst(), case .int(let value) = potentialNumber else {
+            self = start
+            return nil
+        }
+        return Expression.number(value: value)
+    }
 }

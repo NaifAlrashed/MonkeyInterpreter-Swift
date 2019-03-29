@@ -8,9 +8,4 @@
 
 struct Program: Node {
     let statements: [Statement]
-    
-    var token: Token {
-        guard let statement = statements.first else { return .illegal }
-        return statement.token
-    }
 }

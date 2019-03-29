@@ -9,7 +9,7 @@
 import XCTest
 @testable import MonkeyInterpreter
 
-class MonkeyInterpreterTests: XCTestCase {
+class LexerTests: XCTestCase {
     
     func test_lexerInput() {
         let input = "=+(){},;"

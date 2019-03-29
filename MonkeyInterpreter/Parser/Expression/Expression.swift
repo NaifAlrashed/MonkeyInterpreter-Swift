@@ -6,7 +6,7 @@
 //  Copyright © 2019 Naif Alrashed. All rights reserved.
 //
 
-protocol Expression: Node {
-//    var node: Node { get }
-    func expressionNode()
+indirect enum Expression: Equatable {
+    case number(value: Int)
+    case addition(lhs: Expression, rhs: Expression)
 }

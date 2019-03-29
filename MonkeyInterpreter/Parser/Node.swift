@@ -7,5 +7,5 @@
 //
 
 protocol Node {
-    var token: Token { get }
+//    var token: Token { get }
 }
