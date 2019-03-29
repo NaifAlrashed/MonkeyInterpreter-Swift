@@ -37,10 +37,10 @@ extension ArraySlice where Element == Token {
     mutating func readLetStatement() -> Statement? {
         let start = self
         guard self.popFirst() == .let,
-            let potentialVariable = self.popFirst(),
+            let potentialVariable = popFirst(),
             self.popFirst() == .assign,
             case .variable(let name) = potentialVariable,
-            let expression = self.readExpression()
+            let expression = readExpression()
         else {
             self = start
             return nil
@@ -50,9 +50,9 @@ extension ArraySlice where Element == Token {
     
     mutating func readExpression() -> Expression? {
         let start = self
-        guard let potentialNumber = self.popFirst(),
+        guard let potentialNumber = popFirst(),
             case .int(let value) = potentialNumber,
-            let potentialSemicolon = self.popFirst(),
+            let potentialSemicolon = popFirst(),
             case .semicolon = potentialSemicolon
         else {
             self = start
