@@ -49,6 +49,7 @@ extension ArraySlice where Element == Token {
         let start = self
         guard self.popFirst() == .let,
             let potentialVariable = self.popFirst(),
+            self.popFirst() == .assign,
             case .variable(let name) = potentialVariable,
             let expression = self.readExpression()
         else {
@@ -60,7 +61,11 @@ extension ArraySlice where Element == Token {
     
     mutating func readExpression() -> Expression? {
         let start = self
-        guard let potentialNumber = self.popFirst(), case .int(let value) = potentialNumber else {
+        guard let potentialNumber = self.popFirst(),
+            case .int(let value) = potentialNumber,
+            let potentialSemicolon = self.popFirst(),
+            case .semicolon = potentialSemicolon
+        else {
             self = start
             return nil
         }
