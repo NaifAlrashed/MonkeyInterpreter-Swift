@@ -28,7 +28,7 @@ struct Parser {
     }
 }
 
-extension ArraySlice where Element == Token {
+fileprivate extension ArraySlice where Element == Token {
     
     mutating func readStatement() -> Statement? {
         return readLetStatement()
@@ -49,15 +49,39 @@ extension ArraySlice where Element == Token {
     }
     
     mutating func readExpression() -> Expression? {
-        let start = self
-        guard let potentialNumber = popFirst(),
-            case .int(let value) = potentialNumber,
-            let potentialSemicolon = popFirst(),
-            case .semicolon = potentialSemicolon
-        else {
-            self = start
+        return readAddition()
+    }
+    
+    mutating func readAddition() -> Expression? {
+        let startBeforeOperand = self
+        guard let operand = readOperand() else {
+            self = startBeforeOperand
             return nil
         }
-        return Expression.number(value: value)
+        
+        let start = self
+        
+        guard let potentialAddition = popFirst(),
+            case .plus = potentialAddition,
+            let rhs = readExpression()
+        else {
+            self = start
+            if let potentialSemicolon = popFirst(), case .semicolon = potentialSemicolon {
+                return operand
+            } else {
+                self = startBeforeOperand
+                return nil
+            }
+        }
+        return .addition(lhs: operand, rhs: rhs)
+    }
+    
+    mutating func readOperand() -> Expression? {
+        guard let potentialNumber = popFirst(),
+            case .int(let value) = potentialNumber
+        else {
+            return nil
+        }
+        return .number(value: value)
     }
 }
